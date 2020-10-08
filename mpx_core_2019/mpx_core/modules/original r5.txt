@@ -1,0 +1,139 @@
+int initializeHeap(int size); // should return # of bites 
+void allocateMemory(int allocateSize);
+void freeMemory(CMCB*);
+void showAllocate(void);
+void showFree(void);
+int IsEmpty(void);
+
+
+#include"r5.h"
+#include "mpx_supt.h"
+
+/*
+initializeHeap
+
+used to allcate all the memory available for your MPX
+It will take an integer parameter that will indicate the size of the heap in bytes, during testing, you shouldn't need more than 1000 bytes.
+
+Using kmalloc, allocate the amount of bytes given+sizeof(CMBC) + sizeof(LMCB) and store that location in a global variable as the start of memory
+You will then put a CMCB at the top of the Heap and a LMCB at the bottom of the heap both of type free
+
+This is also where you will want to initialize your free and allocated lists
+
+*/
+struct CMCB* condition; 
+struct set heap;
+struct set free;
+struct set allocate;
+
+void initializeHeap(int size)
+{
+condition = (struct CMCB*)malloc(size +sizeof(LMCB)+sizeof(CMCB));
+CMCB* head= (CMCB*)condition; 
+head-> type=0;
+head-> beginAddress= (u32int) condition +sizeof(CMCB);
+head ->size = size+sizeof(LMCB) +sizeof(CMCB);
+head-> next= NULL;
+head->previous=NULL;
+heap.head=head;
+LMCB* end= (LMCB*)((u32int) condition +sizeof(CMCB)+size);
+end ->type=0;
+end->size=size;
+
+}
+
+/*
+void initializeHeap(int size)
+{
+ int a;
+ a = size;
+ size = a;// for compile successful;
+}
+*/
+/*
+allocateMemory
+is used to allocate momory from the heap
+
+It will take an integer parameter indicating the amount of bytes to be allocatedfrom the heap
+
+You will then implement the first-fit method of memory allcation
+You will need to find a block big engough to hould the parameter size + sizof(CMCB) + sizeof(LMCB)
+*/
+void allocateMemory(int allocateSize)
+{
+ int a;
+ a = allocateSize; 
+ allocateSize = a;// for compile successful
+}
+
+/*
+freeMemory
+is used to free a particular block of memory that was previously allocated
+It will use an address or a pointer to an address in memory as its parameter and will then search your allocated list for the block
+*/
+void freeMemory(CMCB* mcb)
+{
+    CMCB* a;
+    a = mcb; 
+    mcb = a;// for compile successful
+}
+
+/*
+showAllocate and freeMemory
+is used to traverse your list that will ahow the address of the block as well as
+the size of the block 
+
+These should be shown in order of address
+
+You will need to create one for both the allocated and free list
+*/
+void showAllocate()
+{
+CMCB* t = allocate.head;
+while(t!= NULL){
+	char str[543] = "";
+	char temp[20] = {"0"};
+	strcat(str, "\n Address of the block: ");
+	strcat(str, t -> beginAddress);
+	strcat(str, "Size of the block: ");
+	itoa(t->size, temp, 10);
+	strcat(str, temp);
+	print(str);
+	t = t -> next;
+}
+
+
+}
+void showFree()
+{
+CMCB* t = free.head;
+while(t!= NULL){
+	char str[543] = "";
+	char temp[20] = {"0"};
+	strcat(str, "\n Address of the block: ");
+	strcat(str, t -> beginAddress);
+	strcat(str, "Size of the block: ");
+	itoa(t->size, temp, 10);
+	strcat(str, temp);
+	print(str);
+	t = t -> next;
+}
+
+}
+
+/*
+is used to return TRUE or FALSE (defined in r5.h file) based on whether the heap is empty, or more simply, contains ONLY free memory
+*/
+int IsEmpty(void)
+{
+CMCB* t= heap.head;
+while (t!= NULL)
+{
+if(t->type ==1) {
+return FALSE;
+}
+t=t->next;
+}
+return TRUE;
+}
+

@@ -1,0 +1,37 @@
+TODO LIST:
+1) First read through my .h files, understand my new functions and the parameters. They are similar to what yours should be but there could be some minor differences between mine and yours.
+2) Add my folder "AlexWork" directly into your "modules" folder
+3) Add "AlexWork/PCB_QUEUE.o AlexWork/R3.o" to the makefile
+4) Edit kmain to complete the following:
+	* Call setupSystem()
+	* loadProc(&<YourComhand>,"comhand",0)
+	* loadProc(&idle,"idle",9);
+	* asm volatile ("int $60");
+5) Edit your comhand to be a process, not a method. You can do this by adding "sys_req(IDLE,DEFAULT_DEVICE,NULL,NULL);" to the beginning of your comhand, inside of your while loop, or at the end of your while loop, just before it loops back around.
+6) I do NOT have infinite or IDLE because those are not needed for R5.
+7) You need to also call "shutdownQueues()" on shutdown. Then call "sys_req(EXIT,DEFAULT,NULL,NULL);"
+8) I don't ask for ANY input using sys_req(READ,...) in my methods in PCB_QUEUE.c or R3.c so you need to pass all needed parameters to these methods yourself.
+9) You need to make sure you include my files "PCB_QUEUE.h" and "R3.h" where appropriate and whenever you need these methods.
+10) Remove ALL CALLS to your old R2, R3, and R4 code if you want to use my code. Store any old R2, R3, and R4 code in a folder labeled "OUR_OLD_CODE" if you do want to use my code. THIS IS VERY IMPORTANT!
+
+The sys_call_isr code is:
+sys_call_isr:
+	pusha
+	push ds
+	push es
+	push fs
+	push gs
+	push esp
+	
+	call sys_call
+	mov esp,eax
+	
+	pop gs
+	pop fs
+	pop es
+	pop ds
+	popa
+	
+	iret
+
+I already stitched this new code into a couple projects and it does work, there could be some minor bugs left around because I wrote this in a couple hours but this should work for any group.
