@@ -1,4 +1,0 @@
-liye: sys_call_isr, fixing polling, debugging
-raneem: user manual
-chrisse: yield, loadr3, interrupt editing, updated help
-jackie: sys_call, programming manual
